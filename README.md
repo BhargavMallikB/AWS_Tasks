@@ -17,22 +17,17 @@
 
 ### Installing Dependencies
 
-    ```bash
     cd Task01
+
     npm install
-    ```
 
 ### Build Application
 
-    ```bash
     npm run build
-    ```
 
 ### Run Application
 
-    ```bash
     npm run start
-    ```
 
 
     
