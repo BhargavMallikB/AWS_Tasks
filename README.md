@@ -1,4 +1,4 @@
-# Task01
+# Task02
 
 ## Fetching Data from an API using TypeScript and NodeJS
 
