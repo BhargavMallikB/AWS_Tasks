@@ -13,6 +13,13 @@ import {
   insertUserSynchronously,
   updateUserByIdSynchronously,
 } from "./Synchronus/synchronus";
+import {
+  deleteUserByIdByStreams,
+  getAllUsersByStreams,
+  getUserByIdByStreams,
+  insertUserByStreams,
+  updateUserByIdByStreams,
+} from "./Streams/streams";
 
 const app = express();
 const PORT = 8000;
@@ -142,5 +149,54 @@ app
       res
         .status(500)
         .json({ err: `Failed to Delete with UserId: ${req.params.id}` });
+    }
+  });
+
+app
+  .route("/api/stream/users")
+  .get(async (req: Request, res: Response) => {
+    try {
+      const data = await getAllUsersByStreams();
+      res.json(data);
+    } catch (err) {
+      res.status(500).json({ err: err.message });
+    }
+  })
+  .post(async (req: Request, res: Response) => {
+    try {
+      const message = await insertUserByStreams(req.body);
+      res.json({ message: message });
+    } catch (err) {
+      res.status(500).json({ err: err.message });
+    }
+  });
+
+app
+  .route("/api/stream/users/:id")
+  .get(async (req: Request, res: Response) => {
+    try {
+      const user = await getUserByIdByStreams(Number(req.params.id));
+      res.json(user);
+    } catch (err) {
+      res.status(500).json({ err: err.message });
+    }
+  })
+  .patch(async (req: Request, res: Response) => {
+    try {
+      const updatedUser = await updateUserByIdByStreams(
+        Number(req.params.id),
+        req.body
+      );
+      res.json(updatedUser);
+    } catch (err) {
+      res.status(500).json({ err: err.message });
+    }
+  })
+  .delete(async (req: Request, res: Response) => {
+    try {
+      const deletedUser = await deleteUserByIdByStreams(Number(req.params.id));
+      res.json(deletedUser);
+    } catch (err) {
+      res.status(500).json({ err: err.message });
     }
   });
