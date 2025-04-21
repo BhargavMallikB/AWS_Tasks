@@ -1,4 +1,6 @@
 import express, { Request, Response } from "express";
+
+// Importing Async-based CRUD functions
 import {
   getAllUsers,
   getUserById,
@@ -6,6 +8,8 @@ import {
   deleteUserById,
   insertUser,
 } from "./Asynchronus/asynchronus";
+
+// Importing Sync-based CRUD functions
 import {
   deleteUserByIdSynchronously,
   getAllUsersSynchronously,
@@ -13,6 +17,8 @@ import {
   insertUserSynchronously,
   updateUserByIdSynchronously,
 } from "./Synchronus/synchronus";
+
+// Importing Stream-based CRUD functions
 import {
   deleteUserByIdByStreams,
   getAllUsersByStreams,
@@ -21,27 +27,31 @@ import {
   updateUserByIdByStreams,
 } from "./Streams/streams";
 
-const app = express();
-const PORT = 8000;
+const app = express(); // Initializing Express app
+const PORT = 8000; // Port where the server will run
 
-app.use(express.json());
+app.use(express.json()); // Middleware to parse JSON bodies
 
+// Start server and log server URL
 app.listen(PORT, () =>
   console.log(`Server Started at http://localhost:${PORT}`)
 );
 
-// Make the route handler async
+// ---------------------- ASYNCHRONOUS CRUD ROUTES ----------------------
+
 app
   .route("/api/async/users")
+  // GET all users using async method
   .get(async (req: Request, res: Response) => {
     try {
-      const data = await getAllUsers(); // Await the async function
+      const data = await getAllUsers();
       res.json(data);
     } catch (err) {
       console.error(err);
       res.status(500).json({ error: "Failed to fetch users" });
     }
   })
+  // POST new user using async method
   .post(async (req: Request, res: Response) => {
     try {
       const data = await insertUser(req.body);
@@ -54,6 +64,7 @@ app
 
 app
   .route("/api/async/users/:id")
+  // GET user by id using async method
   .get(async (req: Request, res: Response) => {
     try {
       const data = await getUserById(Number(req.params.id));
@@ -62,6 +73,7 @@ app
       res.status(500).json({ error: "Failed to Fetch User data" });
     }
   })
+  // PATCH user by id using async method
   .patch(async (req: Request, res: Response) => {
     try {
       if (!req.body || Object.keys(req.body).length === 0) {
@@ -82,6 +94,7 @@ app
       res.status(500).json({ error: "Failed to Update the data" });
     }
   })
+  // DELETE user by id using async method
   .delete(async (req: Request, res: Response) => {
     try {
       const data = await deleteUserById(Number(req.params.id));
@@ -96,8 +109,11 @@ app
     }
   });
 
+// ---------------------- SYNCHRONOUS CRUD ROUTES ----------------------
+
 app
   .route("/api/sync/users")
+  // GET all users using sync method
   .get(async (req: Request, res: Response) => {
     try {
       const data = await getAllUsersSynchronously();
@@ -107,6 +123,7 @@ app
       res.status(500).json({ err: `Failed to fetch Users` });
     }
   })
+  // POST new user using sync method
   .post((req: Request, res: Response) => {
     try {
       const data = insertUserSynchronously(req.body);
@@ -118,6 +135,7 @@ app
 
 app
   .route("/api/sync/users/:id")
+  // GET user by id using sync method
   .get(async (req: Request, res: Response) => {
     try {
       const userId = Number(req.params.id);
@@ -128,6 +146,7 @@ app
       res.status(500).json({ err });
     }
   })
+  // PATCH user by id using sync method
   .patch(async (req: Request, res: Response) => {
     try {
       const userId = Number(req.params.id);
@@ -139,6 +158,7 @@ app
       res.status(500).json({ err: err.message });
     }
   })
+  // DELETE user by id using sync method
   .delete(async (req: Request, res: Response) => {
     try {
       const userId = Number(req.params.id);
@@ -152,8 +172,11 @@ app
     }
   });
 
+// ---------------------- STREAM-BASED CRUD ROUTES ----------------------
+
 app
   .route("/api/stream/users")
+  // GET all users using stream method
   .get(async (req: Request, res: Response) => {
     try {
       const data = await getAllUsersByStreams();
@@ -162,6 +185,7 @@ app
       res.status(500).json({ err: err.message });
     }
   })
+  // POST new user using stream method
   .post(async (req: Request, res: Response) => {
     try {
       const message = await insertUserByStreams(req.body);
@@ -173,6 +197,7 @@ app
 
 app
   .route("/api/stream/users/:id")
+  // GET user by id using stream method
   .get(async (req: Request, res: Response) => {
     try {
       const user = await getUserByIdByStreams(Number(req.params.id));
@@ -181,6 +206,7 @@ app
       res.status(500).json({ err: err.message });
     }
   })
+  // PATCH user by id using stream method
   .patch(async (req: Request, res: Response) => {
     try {
       const updatedUser = await updateUserByIdByStreams(
@@ -192,6 +218,7 @@ app
       res.status(500).json({ err: err.message });
     }
   })
+  // DELETE user by id using stream method
   .delete(async (req: Request, res: Response) => {
     try {
       const deletedUser = await deleteUserByIdByStreams(Number(req.params.id));
