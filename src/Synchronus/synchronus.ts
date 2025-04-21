@@ -1,12 +1,12 @@
 import path from "path";
-import fs from 'fs';
+import fs from "fs";
 import { User } from "../types/User";
 
 const FILE_PATH = path.join(__dirname, "../data/USER_DATA.json");
 
 export function getAllUsersSynchronously(): User[] {
   try {
-    const data = fs.readFileSync(FILE_PATH, 'utf-8');
+    const data = fs.readFileSync(FILE_PATH, "utf-8");
     return JSON.parse(data) as User[];
   } catch (err) {
     console.error(`Failed to fetch Users data:`, err);
@@ -16,7 +16,7 @@ export function getAllUsersSynchronously(): User[] {
 
 export function getUserByIdSynchronously(userId: number): User | undefined {
   try {
-    const data = fs.readFileSync(FILE_PATH, 'utf-8');
+    const data = fs.readFileSync(FILE_PATH, "utf-8");
     const users = JSON.parse(data) as User[];
     return users.find((u) => u.id === userId);
   } catch (err) {
@@ -27,13 +27,13 @@ export function getUserByIdSynchronously(userId: number): User | undefined {
 
 export function insertUserSynchronously(userDetails: Partial<User>): string {
   try {
-    const data = fs.readFileSync(FILE_PATH, 'utf-8');
+    const data = fs.readFileSync(FILE_PATH, "utf-8");
     const users = JSON.parse(data) as User[];
     const len = users.length;
 
     const newUser: User = {
       id: len + 1,
-      ...userDetails
+      ...userDetails,
     } as User;
 
     users.push(newUser);
@@ -49,9 +49,12 @@ export function insertUserSynchronously(userDetails: Partial<User>): string {
   }
 }
 
-export function updateUserByIdSynchronously(userId: number, userDetails: Partial<User>): User | undefined {
+export function updateUserByIdSynchronously(
+  userId: number,
+  userDetails: Partial<User>
+): User | undefined {
   try {
-    const data = fs.readFileSync(FILE_PATH, 'utf-8');
+    const data = fs.readFileSync(FILE_PATH, "utf-8");
     const users = JSON.parse(data) as User[];
     const user = users.find((u) => u.id === userId);
 
@@ -69,7 +72,7 @@ export function updateUserByIdSynchronously(userId: number, userDetails: Partial
 
 export function deleteUserByIdSynchronously(userId: number): User | undefined {
   try {
-    const data = fs.readFileSync(FILE_PATH, 'utf-8');
+    const data = fs.readFileSync(FILE_PATH, "utf-8");
     const users = JSON.parse(data) as User[];
     const userIndex = users.findIndex((u) => u.id === userId);
 
