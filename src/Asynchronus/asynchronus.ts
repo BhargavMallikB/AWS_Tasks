@@ -11,7 +11,7 @@ export async function getAllUsers(): Promise<User[] | []> {
     return JSON.parse(data) as User[];
   } catch (e: any) {
     console.error("Failed to read users file:", e.message);
-    return []; // fallback to empty array
+    return []; 
   }
 }
 
@@ -58,7 +58,6 @@ export async function deleteUserById(userId: number) {
     }
     console.log(userIndex);
 
-    // Remove user from the array
     const deletedUser = users.splice(userIndex, 1);
 
     await fs.writeFile(FILE_PATH, JSON.stringify(users, null, 2));
