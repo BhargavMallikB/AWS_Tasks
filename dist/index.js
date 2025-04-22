@@ -9,7 +9,7 @@ const axios_1 = __importDefault(require("axios")); // axios for invoking BASE_UR
 async function getUsers() {
     try { // Handling Errors using try & catch blocks
         const response = await axios_1.default.get(URL_1.BASE_URL); // Invoking BASE_URL to retreive and store the response
-        console.table(response.data); // prints the data that gets from the response
+        console.table(response.data); // prints the data that gets from the response in a tabular format
     }
     catch (err) {
         console.error(`Error occured while Fetching Users ${err}`); // any error occurs prints in the console
