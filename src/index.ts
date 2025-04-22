@@ -82,8 +82,8 @@ app
           .json({ error: "Request body is empty or invalid JSON" });
         return;
       }
-
-      const data = await updateUserById(Number(req.params.id), req);
+      const updateData = req.body;
+      const data = await updateUserById(Number(req.params.id), updateData);
       if (!data) {
         res.status(404).json({ error: "User not found" });
         return;
