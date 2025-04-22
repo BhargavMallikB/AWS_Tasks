@@ -32,7 +32,7 @@ export async function getUserById(userId: number): Promise<User | undefined> {
 // Updates a user by their ID using request body from client
 export async function updateUserById(
   userId: number,
-  req: Request
+  updateData: Omit<User, 'id'>
 ): Promise<User | undefined> {
   try {
     const data = await fs.readFile(FILE_PATH, "utf-8"); // Reading file
@@ -41,7 +41,7 @@ export async function updateUserById(
 
     if (!user) return undefined; // If user doesn't exist, return undefined
 
-    Object.assign(user, req.body); // Updating user fields with values from request body
+    Object.assign(user, updateData); // Updating user fields with values from request body
 
     await fs.writeFile(FILE_PATH, JSON.stringify(users, null, 2)); // Saving updated data to file
     return user; // Returning updated user
