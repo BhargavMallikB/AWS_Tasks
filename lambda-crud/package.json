@@ -1,0 +1,17 @@
+{
+  "name": "lambda-crud",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "prepack": "npm run build"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1530.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "@types/aws-lambda": "^8.10.133",
+    "@types/node": "^20.11.17"
+  }
+}
