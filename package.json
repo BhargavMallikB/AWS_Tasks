@@ -1,0 +1,30 @@
+{
+  "name": "users-lambda-api",
+  "version": "1.0.0",
+  "description": "User management API with AWS Lambda and Serverless Framework",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "deploy": "serverless deploy",
+    "remove": "serverless remove",
+    "dev": "serverless offline",
+    "check": "tsc --noEmit"
+  },
+  "keywords": [],
+  "author": "Bhargav Mallik",
+  "license": "ISC",
+  "devDependencies": {
+    "serverless": "^4.12.0",
+    "serverless-esbuild": "^1.55.0",
+    "serverless-offline": "^14.4.0",
+    "@serverless/typescript": "^4.11.1",
+    "@types/node": "^22.14.0",
+    "@types/aws-lambda": "^8.10.149",
+    "typescript": "^5.8.3",
+    "esbuild": "^0.25.2"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.787.0",
+    "stream": "^0.0.3"
+  }
+}
